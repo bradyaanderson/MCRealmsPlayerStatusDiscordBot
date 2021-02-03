@@ -20,6 +20,7 @@ class RealmsAPI:
 
         if not self.try_authenticate():
             raise AuthenticationError('Unable to authenticate.')
+        self.update_player_statuses()
 
     def update_player_statuses(self):
         new_player_statues = self.get_player_status()
