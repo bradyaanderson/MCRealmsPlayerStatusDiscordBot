@@ -23,7 +23,6 @@ class StatusBotClient(discord.Client):
         if self.channel:
             player_status_updates = self.realms_api.update_player_statuses()
             await self.send_player_status_updates(player_status_updates)
-            print(player_status_updates)
 
     async def send_player_status_updates(self, player_status_updates):
         for player_name, status in player_status_updates.items():
