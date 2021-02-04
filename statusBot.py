@@ -16,7 +16,9 @@ class StatusBotClient(discord.Client):
     async def on_ready(self):
         print(str(self.user) + ' has connected to Discord!')
         self.channel = self.get_channel()
-        print(self.channel)
+        if not self.channel:
+            raise GetChannelError("Unable to get channel. Please verify the name is correct.")
+        print("Found channel: " + str(self.channel))
 
     @tasks.loop(minutes=1)
     async def main_loop(self):
@@ -33,3 +35,8 @@ class StatusBotClient(discord.Client):
         guild_name = os.getenv("GUILD_NAME")
         channel_name = os.getenv("CHANNEL_NAME")
         return discord.utils.get(self.get_all_channels(), guild__name=guild_name, name=channel_name)
+
+
+class GetChannelError(Exception):
+    def __init__(self, message):
+        self.message = message
